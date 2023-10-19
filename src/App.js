@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/header.js';
 import Projects from './components/projects.js';
 import Bookmarks from './components/bookmarks.js';
+import FavBookmarks from './components/favBookmarks.js';
 import Footer from './components/footer.js';
 import useContentful from './hooks/contentful.js';
 import './App.css';
@@ -83,6 +84,7 @@ console.log(data)
       <Header person={person} />
       <Projects projects={projectCollection.items} />
       <Bookmarks bookmarks={bookmarkCollection.items} />
+      <FavBookmarks bookmarks={favBookmarks.items[0].linkedFrom.bookmarkCollection.items} />
       <Footer />
     </div>
   );
