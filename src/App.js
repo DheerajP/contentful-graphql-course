@@ -10,7 +10,7 @@ import './App.css';
 
 const query = `
   {
-    personCollection(where: {name_contains: "Stefan"}, limit: 1) {
+    personCollection(where: {name_contains: "Dheeraj"}, limit: 1) {
       items {
         name
         bio {
@@ -74,7 +74,7 @@ function App() {
   const data = useContentful(query);
 
   if (!data) return <div>Loading ...</div>;
-
+console.log(data)
   const person = data.personCollection.items[0];
   const { bookmarkCollection, projectCollection, favBookmarks } = data;
 

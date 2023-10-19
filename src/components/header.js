@@ -1,4 +1,29 @@
 import React from 'react';
+import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+
+
+const Bold = ({ children }) => <p className="font-bold">{children}</p>;
+const Text = ({ children }) => <p className="align-center">{children}</p>;
+
+
+const options = {
+  renderMark: {
+    [MARKS.BOLD]: (text) => <Bold>{text}</Bold>
+  },
+  renderNode: {
+    [BLOCKS.PARAGRAPH]: (node, children) => <Text>{children}</Text>,
+    [INLINES.HYPERLINK] : (node, children) => <a className="text-indigo-300" href={node.data.uri}>{children}</a>
+  },
+  renderText: (text) => text.replace('!', '?'),
+};
+
+
+
+
+
+
+
 
 function TwitterLink({ url }) {
   return (
@@ -43,15 +68,17 @@ function LinkedinLink({ url }) {
 }
 
 function Header({ person }) {
-  const { bio, socialTwitter, socialLinkedin, socialGithub } = person;
+  const { name, bio, socialTwitter, socialLinkedin, socialGithub } = person;
+  console.log(person)
   return (
     <section className="bg-gray-800">
       <div className="container mx-auto px-6 py-8">
         <div className="lg:flex items-center">
           <div className="lg:w-1/2">
-            <h2 className="text-gray-100 text-3xl font-bold">Who I am</h2>
+            <h2 className="text-gray-100 text-3xl font-bold">{name}</h2>
 
-            {/* <p className="text-gray-400 lg:max-w-md mt-4">{bio}</p> */}
+            <p className="text-gray-400 lg:max-w-md mt-4"> {documentToReactComponents(bio.json, options)} </p>
+
 
             <div className="flex items-center -mx-2 mt-6">
               {socialTwitter && <TwitterLink url={socialTwitter} />}
